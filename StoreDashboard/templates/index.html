@@ -1,0 +1,487 @@
+{% load static %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f7f8fc" />
+  <meta name="csrf-token" content="{{ csrf_token }}" />
+  <title>نوا | داشبورد مدیریت فروشگاه</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,0..1&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+  <link rel="stylesheet" href="{% static 'styles.css' %}" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-row">
+        <div class="brand-mark d-flex justify-content-center align-items-baseline">ن</div>
+        <div class="brand-copy"><strong>نوا</strong><span>مدیریت فروشگاه</span></div><button
+          class="icon-btn sidebar-close d-lg-none" id="sidebarClose"><span
+            class="material-symbols-rounded">close</span></button>
+      </div>
+      <div class="store-switcher">
+        <div class="store-avatar">N</div>
+        <div><strong>فروشگاه نوا</strong><span>آنلاین و فعال</span></div><span
+          class="material-symbols-rounded chevron">expand_more</span>
+      </div>
+      <nav class="nav-menu" aria-label="منوی اصلی">
+        <p class="nav-label">نمای کلی</p>
+        <button class="nav-item active" data-page="dashboard"><span
+            class="material-symbols-rounded">space_dashboard</span><span>داشبورد</span></button>
+        <p class="nav-label">مدیریت محصولات</p>
+        <button class="nav-item has-submenu" data-submenu="products-menu"><span
+            class="material-symbols-rounded">inventory_2</span><span>محصولات</span><span
+            class="material-symbols-rounded nav-arrow">expand_more</span></button>
+        <div class="submenu open" id="products-menu"><button class="sub-item" data-page="products">لیست
+            محصولات</button><button class="sub-item" data-page="add-product">افزودن محصول</button><button
+            class="sub-item" data-page="stock">کاهش موجودی محصول</button><button class="sub-item"
+            data-page="add-stock">افزایش موجودی محصول</button></div>
+        <p class="nav-label">گزارش‌ها</p>
+        <button class="nav-item has-submenu" data-submenu="sales-menu"><span
+            class="material-symbols-rounded">monitoring</span><span>آمار فروش</span><span
+            class="material-symbols-rounded nav-arrow">expand_more</span></button>
+        <div class="submenu" id="sales-menu"><button class="sub-item" data-page="sales-products">آمار فروش
+            محصولات</button><button class="sub-item" data-page="sales-count">تعداد فروش محصولات</button></div>
+        <p class="nav-label">سیستم</p>
+        <button class="nav-item" data-page="settings"><span
+            class="material-symbols-rounded">settings</span><span>تنظیمات</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><span class="material-symbols-rounded">support_agent</span>
+          <div><strong>به کمک نیاز دارید؟</strong><small>تیم پشتیبانی نوا آماده است.</small></div><button
+            class="icon-btn"><span class="material-symbols-rounded">arrow_back</span></button>
+        </div>
+        <div class="user-profile">
+          <div class="user-avatar d-flex justify-content-center align-items-baseline">م</div>
+          <div><strong>مریم احمدی</strong><span>مدیر فروشگاه</span></div><span
+            class="material-symbols-rounded more">more_vert</span>
+        </div>
+      </div>
+    </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-right"><button class="icon-btn menu-toggle" id="menuToggle"><span
+              class="material-symbols-rounded">menu</span></button>
+          <div class="breadcrumb"><span>فروشگاه نوا</span><span
+              class="material-symbols-rounded">chevron_left</span><strong id="pageTitle">داشبورد</strong></div>
+        </div>
+        <div class="topbar-left"><button class="icon-btn notification-btn" aria-label="اعلان‌ها"><span
+              class="material-symbols-rounded">notifications</span><i></i></button><button class="icon-btn theme-toggle"
+            id="themeToggle" aria-label="تغییر تم"><span class="material-symbols-rounded">dark_mode</span></button>
+          <div class="topbar-date"><span class="material-symbols-rounded">calendar_today</span><span
+              id="topbarDate">امروز</span></div>
+        </div>
+      </header>
+      <div class="page-container">
+        <section class="page active" id="dashboard-page">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">خلاصه عملکرد فروشگاه</p>
+              <h1>صبح بخیر، مدیر <span>👋</span></h1>
+              <p class="muted">امروز فروشگاه شما پررونق‌تر از همیشه است.</p>
+            </div><button class="primary-btn" data-page="add-product"><span
+                class="material-symbols-rounded">add</span>محصول جدید</button>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card accent-blue">
+              <div class="stat-icon"><span class="material-symbols-rounded">inventory_2</span></div>
+              <div class="stat-content"><span>کل محصولات</span><strong id="totalProducts">۰</strong><small
+                  class="positive">ثبت‌شده در فروشگاه</small></div><span
+                class="material-symbols-rounded stat-arrow">more_horiz</span>
+            </div>
+            <div class="stat-card accent-green">
+              <div class="stat-icon"><span class="material-symbols-rounded">check_circle</span></div>
+              <div class="stat-content"><span>محصولات موجود</span><strong id="availableProducts">۰</strong><small
+                  class="positive">دارای موجودی انبار</small></div><span
+                class="material-symbols-rounded stat-arrow">more_horiz</span>
+            </div>
+            <div class="stat-card accent-orange">
+              <div class="stat-icon"><span class="material-symbols-rounded">production_quantity_limits</span></div>
+              <div class="stat-content"><span>محصولات ناموجود</span><strong id="outOfStockProducts">۰</strong><small
+                  class="negative">نیازمند تامین موجودی</small></div><span
+                class="material-symbols-rounded stat-arrow">more_horiz</span>
+            </div>
+            <div class="stat-card accent-purple">
+              <div class="stat-icon"><span class="material-symbols-rounded">payments</span></div>
+              <div class="stat-content"><span>فروش امروز</span><strong><span id="todayRevenue">۰</span> <b>تومان</b></strong><small
+                  class="positive"><span id="todayOrders">۰</span> سفارش امروز</small></div><span
+                class="material-symbols-rounded stat-arrow">more_horiz</span>
+            </div>
+          </div>
+          <div class="dashboard-grid">
+            <section class="panel sales-panel">
+              <div class="panel-head">
+                <div>
+                  <h2>گزارش فروش</h2>
+                  <p>نمایش عملکرد فروش در بازه انتخابی</p>
+                </div><select class="select-control">
+                  <option>۷ روز گذشته</option>
+                  <option>۳۰ روز گذشته</option>
+                  <option>۳ ماه گذشته</option>
+                </select>
+              </div>
+              <div class="chart-area">
+                <div class="chart-y-labels">
+                  <span>۴۰م</span><span>۳۰م</span><span>۲۰م</span><span>۱۰م</span><span>۰</span></div>
+                <div class="chart">
+                  <div class="chart-grid"><i></i><i></i><i></i><i></i><i></i></div><svg viewBox="0 0 700 230"
+                    preserveAspectRatio="none" class="line-chart">
+                    <defs>
+                      <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stop-color="#5c6df2" stop-opacity=".22" />
+                        <stop offset="100%" stop-color="#5c6df2" stop-opacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path class="chart-fill" id="chartFillPath"
+                      d="M0,170 C55,155 78,168 120,124 S178,132 220,142 S270,72 320,110 S372,100 420,125 S468,34 520,80 S574,70 620,86 S660,42 700,50 L700,230 L0,230 Z" />
+                    <path class="chart-line" id="chartLinePath"
+                      d="M0,170 C55,155 78,168 120,124 S178,132 220,142 S270,72 320,110 S372,100 420,125 S468,34 520,80 S574,70 620,86 S660,42 700,50" />
+                    <circle id="chartPoint" cx="468" cy="34" r="5" class="chart-point" />
+                  </svg>
+                  <div class="chart-x-labels" id="chartLabels"></div>
+                </div>
+              </div>
+              <div class="chart-summary">
+                <div><span class="legend-dot"></span> مجموع فروش ۷ روز <strong id="weeklyRevenue">۰ تومان</strong></div>
+                <span class="summary-change" id="weeklyOrders">۰ سفارش</span>
+              </div>
+            </section>
+            <section class="panel channel-panel">
+              <div class="panel-head">
+                <div>
+                  <h2>کانال‌های فروش</h2>
+                  <p>منبع سفارش‌های این ماه</p>
+                </div><button class="icon-btn"><span class="material-symbols-rounded">more_horiz</span></button>
+              </div>
+              <div class="donut-wrap">
+                <div class="donut">
+                  <div class="donut-center"><strong id="monthlyOrders">۰</strong><span>سفارش</span></div>
+                </div>
+              </div>
+              <div class="channel-list">
+                <div><span class="channel-color blue"></span><span>وب‌سایت</span><strong id="websiteSales">۰٪</strong></div>
+                <div><span class="channel-color cyan"></span><span>اینستاگرام</span><strong id="instagramSales">۰٪</strong></div>
+                <div><span class="channel-color violet"></span><span>دیجی‌کالا</span><strong id="marketplaceSales">۰٪</strong></div>
+              </div>
+            </section>
+          </div>
+          <div class="dashboard-grid lower-grid">
+            <section class="panel product-panel">
+              <div class="panel-head">
+                <div>
+                  <h2>محصولات پرفروش</h2>
+                  <p>محبوب‌ترین محصولات در این ماه</p>
+                </div><button class="text-btn" data-page="products">مشاهده همه <span
+                    class="material-symbols-rounded">arrow_back</span></button>
+              </div>
+              <div class="owl-carousel bestseller-carousel" id="bestsellerCarousel">
+              </div>
+              <p class="muted hidden" id="topProductsEmpty">هنوز فروشی ثبت نشده است.</p>
+            </section>
+            <section class="panel quick-panel">
+              <div class="panel-head">
+                <div>
+                  <h2>دسترسی سریع</h2>
+                  <p>عملیات پرکاربرد</p>
+                </div>
+              </div>
+              <div class="quick-actions"><button data-page="add-product"><span
+                    class="material-symbols-rounded">add_box</span><span>افزودن محصول</span><small>محصول تازه ثبت
+                    کنید</small></button><button data-page="stock"><span
+                    class="material-symbols-rounded">low_priority</span><span>کاهش موجودی</span><small>موجودی انبار را
+                    به‌روز کنید</small></button><button data-page="sales-products"><span
+                    class="material-symbols-rounded">bar_chart</span><span>گزارش فروش</span><small>عملکرد را بررسی
+                    کنید</small></button></div>
+            </section>
+          </div>
+          <section class="panel recent-panel">
+            <div class="panel-head">
+              <div>
+                <h2>آخرین فروش‌ها</h2>
+                <p>آخرین تراکنش‌های ثبت‌شده در فروشگاه</p>
+              </div><button class="text-btn" data-page="sales-count">مشاهده همه <span
+                  class="material-symbols-rounded">arrow_back</span></button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>شماره سفارش</th>
+                    <th>مشتری</th>
+                    <th>محصول</th>
+                    <th>تاریخ</th>
+                    <th>مبلغ</th>
+                    <th>وضعیت</th>
+                  </tr>
+                </thead>
+                <tbody id="recentSalesBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+        <section class="page" id="products-page">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">کاتالوگ فروشگاه</p>
+              <h1>لیست محصولات</h1>
+              <p class="muted">مدیریت و مشاهده تمام محصولات فروشگاه</p>
+            </div><button class="primary-btn" data-page="add-product"><span
+                class="material-symbols-rounded">add</span>افزودن محصول</button>
+          </div>
+          <div class="panel">
+            <div class="toolbar">
+              <div class="search-box"><span class="material-symbols-rounded">search</span><input id="productSearch"
+                  type="search" placeholder="جستجوی نام محصول..." /></div><select class="select-control"
+                id="categoryFilter">
+                <option value="all">همه دسته‌بندی‌ها</option>
+                <option value="audio">صوتی و تصویری</option>
+                <option value="digital">دیجیتال</option>
+                <option value="wearable">پوشیدنی</option>
+                <option value="home">خانه</option>
+              </select><button class="ghost-btn"><span class="material-symbols-rounded">filter_list</span>فیلتر
+                بیشتر</button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table product-table">
+                <thead>
+                  <tr>
+                    <th>محصول</th>
+                    <th>دسته‌بندی</th>
+                    <th>قیمت</th>
+                    <th>موجودی</th>
+                    <th>وضعیت</th>
+                    <th>عملیات</th>
+                  </tr>
+                </thead>
+                <tbody id="productsBody"></tbody>
+              </table>
+            </div>
+            <div class="empty-state hidden" id="productsEmpty"><span class="material-symbols-rounded">inventory_2</span>
+              <h3>محصولی پیدا نشد</h3>
+              <p>عبارت جستجو یا فیلتر را تغییر دهید.</p>
+            </div>
+          </div>
+        </section>
+        <section class="page" id="add-product-page">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">مدیریت محصولات</p>
+              <h1>افزودن محصول جدید</h1>
+              <p class="muted">اطلاعات محصول تازه را وارد کنید.</p>
+            </div>
+          </div>
+          <div class="form-layout">
+            <form class="panel form-panel" id="addProductForm">
+              <div class="form-section-title"><span>اطلاعات اصلی</span><small>فیلدهای ستاره‌دار الزامی هستند</small>
+              </div>
+              <div class="form-grid"><label>نام محصول *<input name="name" required
+                    placeholder="مثلاً: اسپیکر بلوتوثی نوا" /></label><label>دسته‌بندی *<select name="category"
+                    required>
+                    <option value="audio">صوتی و تصویری</option>
+                    <option value="digital">دیجیتال</option>
+                    <option value="wearable">پوشیدنی</option>
+                    <option value="home">خانه</option>
+                  </select></label><label>قیمت (تومان) *<input name="price" required type="number"
+                    placeholder="۰" /></label><label>موجودی اولیه *<input name="stock" required type="number"
+                    placeholder="۰" /></label><label class="full">توضیحات محصول<textarea name="description" rows="5"
+                    placeholder="توضیح کوتاهی درباره محصول بنویسید..."></textarea></label></div>
+              <div class="form-actions"><button type="button" class="ghost-btn"
+                  data-page="products">انصراف</button><button type="submit" class="primary-btn"><span
+                    class="material-symbols-rounded">check</span>ثبت محصول</button></div>
+            </form>
+            <div class="panel upload-panel">
+              <div class="upload-icon"><span class="material-symbols-rounded">cloud_upload</span></div>
+              <h3>تصویر محصول</h3>
+              <p>تصویر محصول را اینجا بکشید یا انتخاب کنید.</p><button type="button" class="ghost-btn">انتخاب
+                تصویر</button><small>PNG یا JPG، حداکثر ۲ مگابایت</small>
+            </div>
+          </div>
+        </section>
+        <section class="page" id="stock-page">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">انبارداری</p>
+              <h1>کاهش موجودی محصول</h1>
+              <p class="muted">موجودی کالاهای فروشگاه را به‌سادگی مدیریت کنید.</p>
+            </div>
+          </div>
+          <div class="form-layout">
+            <form class="panel form-panel" id="stockForm">
+              <div class="form-section-title"><span>ثبت خروجی از انبار</span><small>موجودی فعلی کنار هر محصول نمایش داده
+                  می‌شود</small></div>
+              <div class="form-grid"><label class="full">انتخاب محصول *<select name="productId" id="stockProduct"
+                    required></select></label><label>تعداد کاهش *<input name="amount" type="number" min="1" required
+                    placeholder="مثلاً: ۱" /></label><label>علت کاهش<select name="reason">
+                    <option>فروش حضوری</option>
+                    <option>فروش آنلاین</option>
+                    <option>مرجوعی به تامین‌کننده</option>
+                    <option>آسیب‌دیدگی</option>
+                  </select></label><label class="full">یادداشت<textarea name="note" rows="4"
+                    placeholder="توضیحات اختیاری..."></textarea></label></div>
+              <div class="form-actions"><button type="reset" class="ghost-btn">پاک کردن</button><button type="submit"
+                  class="primary-btn"><span class="material-symbols-rounded">inventory</span>ثبت کاهش موجودی</button>
+              </div>
+            </form>
+            <div class="panel stock-summary">
+              <div class="summary-icon"><span class="material-symbols-rounded">warehouse</span></div><span>ارزش تقریبی
+                انبار</span><strong><span id="inventoryValue">۰</span> <small>تومان</small></strong>
+              <p><b id="inventoryUnits">۰</b> واحد در انبار</p>
+            </div>
+          </div>
+        </section>
+        <section class="page" id="add-stock-page">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">انبارداری</p>
+              <h1>افزایش موجودی محصول</h1>
+              <p class="muted">ورود کالاهای جدید به انبار را ثبت کنید.</p>
+            </div>
+          </div>
+          <div class="form-layout">
+            <form class="panel form-panel" id="increaseStockForm">
+              <div class="form-section-title"><span>ثبت ورود به انبار</span><small>موجودی فعلی کنار هر محصول نمایش داده
+                  می‌شود</small></div>
+              <div class="form-grid">
+                <label class="full">انتخاب محصول *<select name="productId" id="increaseStockProduct"
+                    required></select></label>
+                <label>تعداد افزایش *<input name="amount" type="number" min="1" step="1" required
+                    placeholder="مثلاً: ۱۰" /></label>
+                <label>علت ورود<select name="reason">
+                    <option>خرید از تامین‌کننده</option>
+                    <option>مرجوعی مشتری</option>
+                    <option>اصلاح موجودی انبار</option>
+                    <option>سایر</option>
+                  </select></label>
+                <label class="full">یادداشت<textarea name="note" rows="4"
+                    placeholder="توضیحات اختیاری..."></textarea></label>
+              </div>
+              <div class="form-actions"><button type="reset" class="ghost-btn">پاک کردن</button><button type="submit"
+                  class="primary-btn"><span class="material-symbols-rounded">add_box</span>ثبت افزایش موجودی</button>
+              </div>
+            </form>
+            <div class="panel stock-summary">
+              <div class="summary-icon"><span class="material-symbols-rounded">inventory</span></div>
+              <span>مدیریت موجودی</span>
+              <p>با ثبت هر ورود، موجودی محصول و گردش انبار به‌روزرسانی می‌شود.</p>
+            </div>
+          </div>
+        </section>
+        <section class="page" id="sales-products-page">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">گزارش‌ها</p>
+              <h1>آمار فروش محصولات</h1>
+              <p class="muted">محصولات را بر اساس عملکرد فروش مقایسه کنید.</p>
+            </div><button class="ghost-btn"><span class="material-symbols-rounded">download</span>خروجی گزارش</button>
+          </div>
+          <div class="stats-grid compact">
+            <div class="stat-card accent-purple">
+              <div class="stat-icon"><span class="material-symbols-rounded">payments</span></div>
+              <div class="stat-content"><span>درآمد ۳۰ روز اخیر</span><strong><span id="monthRevenue">۰</span> <b>تومان</b></strong><small
+                  class="positive">سفارش‌های لغوشده محاسبه نمی‌شوند</small></div>
+            </div>
+            <div class="stat-card accent-blue">
+              <div class="stat-icon"><span class="material-symbols-rounded">shopping_bag</span></div>
+              <div class="stat-content"><span>تعداد سفارش</span><strong id="monthOrders">۰</strong><small class="positive">در ۳۰ روز اخیر</small></div>
+            </div>
+            <div class="stat-card accent-green">
+              <div class="stat-icon"><span class="material-symbols-rounded">receipt_long</span></div>
+              <div class="stat-content"><span>میانگین سبد خرید</span><strong>۲۲۸,۱۰۰ <b>تومان</b></strong><small
+                  class="positive">۵.۶٪ رشد ماهانه</small></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>رتبه‌بندی محصولات بر اساس فروش</h2>
+                <p>۳۰ روز گذشته</p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>رتبه</th>
+                    <th>محصول</th>
+                    <th>تعداد فروش</th>
+                    <th>درآمد</th>
+                    <th>سهم از فروش</th>
+                  </tr>
+                </thead>
+                <tbody id="salesProductsBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section class="page" id="sales-count-page">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">گزارش سفارش‌ها</p>
+              <h1>تعداد فروش محصولات</h1>
+              <p class="muted">آخرین فروش‌ها و وضعیت سفارش‌های ثبت‌شده</p>
+            </div><button class="ghost-btn"><span class="material-symbols-rounded">calendar_month</span>انتخاب
+              بازه</button>
+          </div>
+          <div class="panel recent-panel">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>شماره سفارش</th>
+                    <th>مشتری</th>
+                    <th>محصول</th>
+                    <th>تاریخ</th>
+                    <th>مبلغ</th>
+                    <th>وضعیت</th>
+                  </tr>
+                </thead>
+                <tbody id="salesTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section class="page" id="settings-page">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">تنظیمات</p>
+              <h1>تنظیمات فروشگاه</h1>
+              <p class="muted">پیکربندی ظاهر و اطلاعات پایه فروشگاه.</p>
+            </div>
+          </div>
+          <div class="panel settings-panel">
+            <div class="setting-row">
+              <div><strong>اعلان‌های فروش</strong><span>برای سفارش‌های جدید اعلان دریافت کنید.</span></div><label
+                class="switch"><input type="checkbox" id="notificationsSetting" checked /><span></span></label>
+            </div>
+            <div class="setting-row">
+              <div><strong>نمایش موجودی کم</strong><span id="lowStockDescription">محصولات با موجودی کمتر از ۵ عدد را مشخص کن.</span></div><label
+                class="switch"><input type="checkbox" id="lowStockSetting" checked /><span></span></label>
+            </div>
+            <div class="setting-row">
+              <div><strong>حالت نمایش</strong><span>ظاهر داشبورد را انتخاب کنید.</span></div><button class="ghost-btn"
+                id="settingsTheme">تغییر حالت نمایش</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="{% static 'app.js' %}"></script>
+</body>
+
+</html>
